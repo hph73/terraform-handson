@@ -28,6 +28,7 @@ resource "aws_api_gateway_integration" "MyDemoIntegration" {
   uri                     = aws_lambda_function.my_lambda.invoke_arn
 }
 
+# give apigateway permission to call lambda
 resource "aws_lambda_permission" "apigw-lambda" {
   statement_id  = "AllowMyDemoAPIInvoke"
   action        = "lambda:InvokeFunction"

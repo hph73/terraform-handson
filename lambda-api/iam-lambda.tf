@@ -24,6 +24,7 @@
 #   })
 # }
 
+# create an excution role for lambda to assume
 resource "aws_iam_role" "lambda_role" {
   name = "lambda_role"
 

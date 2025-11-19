@@ -3,6 +3,8 @@ resource "aws_api_gateway_account" "demo" {
   cloudwatch_role_arn = aws_iam_role.cloudwatch.arn
 }
 
+# create an IAM role cloudwatch, assign assume role policy and iam role policy
+# the role is attached to api gateway
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"

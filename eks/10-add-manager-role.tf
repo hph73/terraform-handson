@@ -1,5 +1,6 @@
 data "aws_caller_identity" "current" {}
 
+# create eks_admin role and attach iam policy
 resource "aws_iam_role" "eks_admin" {
   name = "${local.env}-${local.eks_name}-eks-admin"
 
@@ -53,6 +54,7 @@ resource "aws_iam_role_policy_attachment" "eks_admin" {
   policy_arn = aws_iam_policy.eks_admin.arn
 }
 
+# allow user hpeng to assume the eks_admin role
 data "aws_iam_user" "manager" {
     user_name = "hpeng"
 }
