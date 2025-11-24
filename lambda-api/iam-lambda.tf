@@ -1,28 +1,40 @@
-# resource "aws_iam_role_policy" "lambda_policy" {
-#   name = "cloudwatch_policy"
-#   role = aws_iam_role.lambda_role.id
+resource "aws_iam_role_policy" "lambda_policy" {
+  name = "cloudwatch_policy"
+  role = aws_iam_role.lambda_role.id
 
-#   # Terraform's "jsonencode" function converts a
-#   # Terraform expression result to valid JSON syntax.
-#   policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Action = [
-#           "logs:CreateLogGroup",
-#           "logs:CreateLogStream",
-#           "logs:DescribeLogGroups",
-#           "logs:DescribeLogStreams",
-#           "logs:PutLogEvents",
-#           "logs:GetLogEvents",
-#           "logs:FilterLogEvents",
-#         ]
-#         Effect   = "Allow"
-#         Resource = "*"
-#       },
-#     ]
-#   })
-# }
+  # Terraform's "jsonencode" function converts a
+  # Terraform expression result to valid JSON syntax.
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:DescribeLogGroups",
+          "logs:DescribeLogStreams",
+          "logs:PutLogEvents",
+          "logs:GetLogEvents",
+          "logs:FilterLogEvents",
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+      {
+        Action = [
+          "dynamodb:PutItem",
+          "dynamodb:GetItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+        ]
+        Effect   = "Allow"
+        Resource = aws_dynamodb_table.my-table.arn
+      }
+    ]
+  })
+}
 
 # create an excution role for lambda to assume
 resource "aws_iam_role" "lambda_role" {
