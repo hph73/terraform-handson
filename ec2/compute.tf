@@ -12,17 +12,28 @@
 resource "aws_instance" "web" {
   # ami                    = data.aws_ami.ubuntu.id
   ami                    = var.AMIS[var.AWS_REGION]
-  instance_type          = "t2.micro"
+  # instance_type          = "t2.micro"
+  instance_type          = "m4.large"
   key_name               = aws_key_pair.deployer.id
   subnet_id              = aws_subnet.main.id
   vpc_security_group_ids = ["${aws_security_group.allow_sgs.id}"]
+  # user_data              = <<-EOF
+  #                         #!/bin/bash
+  #                         sudo su
+  #                         apt update
+  #                         apt install -y apache2
+  #                         echo "Hello world" > /var/www/html/index.html
+  #                         EOF
   user_data              = <<-EOF
                           #!/bin/bash
                           sudo su
                           apt update
-                          apt install -y apache2
-                          echo "Hello world" > /var/www/html/index.html
+                          apt upgrade -y
+                          apt install -y docker.io
+                          usermod -aG docker ubuntu
+                          apt install nginx -y
                           EOF
+
   root_block_device {
     volume_size = 10
   }

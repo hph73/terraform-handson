@@ -13,7 +13,8 @@ variable "PATH_TO_PUBLIC_KEY" {
 variable "AMIS" {
   type = map(string)
   default = {
-    "us-east-1" = "ami-0360c520857e3138f"
+    "us-east-1" = "ami-0360c520857e3138f" # Ubuntu
+    # "us-east-1" = "ami-0fa3fe0fa7920f68e" # Amazon Linux
   }
 }
 
